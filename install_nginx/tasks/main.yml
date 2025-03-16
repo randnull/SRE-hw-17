@@ -1,0 +1,25 @@
+---
+- name: install last nginx version 
+  apt:
+    name: nginx
+    state: present
+
+- name: include secure task
+  include_tasks: secure.yml
+
+- name: copy main page
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+
+- name: copy default
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/sites-available/default.conf
+
+- name: start nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+...

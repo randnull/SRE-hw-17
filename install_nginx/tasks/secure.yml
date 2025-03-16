@@ -1,0 +1,13 @@
+- name: install apache2-utils
+  apt:
+    name: apache2-utils
+    state: present
+
+- name: add user password
+  community.general.htpasswd:
+    path: /etc/nginx/.htpasswd
+    name: admin
+    password: '123'
+    owner: root
+    group: root
+    mode: 0640
