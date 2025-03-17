@@ -1,13 +1,27 @@
+---
 - name: install apache2-utils
   apt:
     name: apache2-utils
     state: present
 
+- name: install python3
+  apt:
+    name: 
+      - python3
+      - python3-pip
+    state: present
+
+- name: install passlib
+  apt:
+    name: python3-passlib
+    state: present
+
 - name: add user password
-  community.general.htpasswd:
+  htpasswd:
     path: /etc/nginx/.htpasswd
-    name: admin
-    password: '123'
+    name: "{{ login }}"
+    password: "{{ password }}"
     owner: root
     group: root
-    mode: 0640
+    mode: 0644
+...

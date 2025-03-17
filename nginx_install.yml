@@ -1,7 +1,11 @@
+---
 - name: Install Nginx
   hosts: all
   become: yes
+  vars_files:
+    - "vars/{{ env }}_vars.yml"
   tasks:
     - name: install nginx
       include_role:
         name: install_nginx
+...

@@ -1,5 +1,5 @@
 ---
-- name: install last nginx version 
+- name: install nginx 
   apt:
     name: nginx
     state: present
@@ -11,11 +11,13 @@
   template:
     src: index.html.j2
     dest: /var/www/html/index.html
+  notify: restart nginx
 
 - name: copy default
   template:
     src: default.conf.j2
-    dest: /etc/nginx/sites-available/default.conf
+    dest: /etc/nginx/sites-available/default
+  notify: restart nginx
 
 - name: start nginx
   systemd:

@@ -1,6 +1,6 @@
 all:
   hosts:
-    192.168.64.7:
+    192.168.64.22:
       ansible_user: vmuser
   vars:
-    source: production
+    env: production
