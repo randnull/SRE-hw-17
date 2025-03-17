@@ -1,8 +1,8 @@
 # Видео-демо
-
-Google-диск: https://drive.google.com/file/d/1PYOG8xsIVtGqEOF63aC0G0yoh9yX0qUp/view?usp=sharing
+```
+Google-диск (качество лучше): https://drive.google.com/file/d/1PYOG8xsIVtGqEOF63aC0G0yoh9yX0qUp/view?usp=sharing
 Yandex-диск: https://disk.yandex.ru/d/JTRlp_rzJ1PkZw
-
+```
 # Подготовка
 
 # Multipass
@@ -12,34 +12,34 @@ Yandex-диск: https://disk.yandex.ru/d/JTRlp_rzJ1PkZw
 
 После создании виртуальной машины, подключиться по ssh к ней не получилось (permission denied).
 Для того, чтобы получить возможность подключаться по ssh необходим файл настроек vm:
-
+```
 cloud-init.yaml
-
+```
 В нем опишем логин и ssh публичный ключ машины, с которой будет управлять нашими виртуальными машинами.
 
 Для генерации ключа воспользуемся  
-
+```
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/multipass-ssh-key
-
+```
 После чего скопируем multipass-ssh-key.pub ключ из ssh/multipass-ssh-key и поместим его в наш файл cloud-init
 
 Также воспользуемся ssh-add в качестве временного решения для ssh:
-
+```
 ssh-add ~/.ssh/multipass-ssh-key
-
+```
 После чего создадим машину использую файл cloud-init:
 
 Для test:
-
+```
 multipass launch -n testvm --cloud-init cloud-init.yaml
-
+```
 Для prod:
-
+```
 multipass launch -n prodvm --cloud-init cloud-init.yaml
-
+```
 Получаем две рабочии машины:
 
-photo
+![Иллюстрация к проекту](https://github.com/randnull/SRE-hw-17/blob/main/images/vm_runs.png)
 
 # Ansible
 
@@ -64,21 +64,26 @@ photo
 
 Чтобы вызвать install_nginx/tasks/secure.yml из install_nginx/tasks/main.yml используем include_tasks:
 
+```
 - name: include secure task
   include_tasks: secure.yml
+```
 
 Однако хранить пароли/логины в открытом виде плохо, поэтому используем ansible-vault для хранения.
 
 Наилучшим образом подойдет способ через encrypt_string, который отдаст нам зашифрованную строку (пример в vars/...)
 
+```
 ansible-vault encrypt_string --vault-id prod@prompt 'prodpass' --name 'password' 
 ansible-vault encrypt_string --vault-id prod@prompt 'admin' --name 'login' 
 
 ansible-vault encrypt_string --vault-id test@prompt 'testpass' --name 'password' 
 ansible-vault encrypt_string --vault-id test@prompt 'admin' --name 'login' 
+```
 
 Примерный вывод команды будет:
 
+```
 New vault password (test):  # тут пишем пароль для vault
 Confirm new vault password (test): # тут повторяем пароль для vault
 Encryption successful
@@ -89,6 +94,7 @@ pa2ssword: !vault |
           37623238366239633934386239373336333134643166633463363734313538356661336463316135
           3637623262613833620a303161333534313130656563303466616164646539396233326533316561
           3265
+```
 
 (!Эти секреты защифрованы с помощью пароля 123 для обоих сред)
 
@@ -96,15 +102,18 @@ pa2ssword: !vault |
 
 Теперь мы можем использовать команды
 
+```
 ansible-playbook --vault-id test@prompt -i inventory/testing.yml nginx_install.yml 
 
 ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_install.yml 
+```
 
 для запуска на testing и production стендах соответсвенно. (после запуска потребует пароль от vault)
 
 Запустим и перейдем по адресу нашего сервера:
 
-
+![Иллюстрация к проекту](https://github.com/randnull/SRE-hw-17/blob/main/images/auth_req.png)
+![Иллюстрация к проекту](https://github.com/randnull/SRE-hw-17/blob/main/images/auth_in.png)
 
 
 # Краткий список используемых действий:
@@ -113,14 +122,14 @@ ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_instal
 2. ssh-add ~/.ssh/multipass-ssh-key
 3. Скопировать multipass-ssh-key.pub в cloud-init
 4. 
-multipass launch -n testvm --cloud-init cloud-init.yaml
+multipass launch -n testvm --cloud-init cloud-init.yaml \
 multipass launch -n prodvm --cloud-init cloud-init.yaml
 
 5. 
-ansible-vault encrypt_string --vault-id prod@prompt 'prodpass' --name 'password' 
+ansible-vault encrypt_string --vault-id prod@prompt 'prodpass' --name 'password' \
 ansible-vault encrypt_string --vault-id prod@prompt 'admin' --name 'login' 
 
-ansible-vault encrypt_string --vault-id test@prompt 'testpass' --name 'password' 
+ansible-vault encrypt_string --vault-id test@prompt 'testpass' --name 'password' \
 ansible-vault encrypt_string --vault-id test@prompt 'admin' --name 'login' 
 
 6. Поместить вывод секретов в папки vars/...
@@ -128,5 +137,5 @@ ansible-vault encrypt_string --vault-id test@prompt 'admin' --name 'login'
 8. 
 Запустить плейбуки:
 
-Либо make create_prod/create_test 
-Либо ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_install.yml ansible-playbook --vault-id test@prompt -i inventory/testing.yml nginx_install.yml 
+Либо make create_prod/create_test \
+Либо ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_install.yml; ansible-playbook --vault-id test@prompt -i inventory/testing.yml nginx_install.yml 
