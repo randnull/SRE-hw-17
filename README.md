@@ -122,14 +122,14 @@ ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_instal
 2. ssh-add ~/.ssh/multipass-ssh-key
 3. Скопировать multipass-ssh-key.pub в cloud-init
 4. 
-multipass launch -n testvm --cloud-init cloud-init.yaml
+multipass launch -n testvm --cloud-init cloud-init.yaml \
 multipass launch -n prodvm --cloud-init cloud-init.yaml
 
 5. 
-ansible-vault encrypt_string --vault-id prod@prompt 'prodpass' --name 'password' 
+ansible-vault encrypt_string --vault-id prod@prompt 'prodpass' --name 'password' \
 ansible-vault encrypt_string --vault-id prod@prompt 'admin' --name 'login' 
 
-ansible-vault encrypt_string --vault-id test@prompt 'testpass' --name 'password' 
+ansible-vault encrypt_string --vault-id test@prompt 'testpass' --name 'password' \
 ansible-vault encrypt_string --vault-id test@prompt 'admin' --name 'login' 
 
 6. Поместить вывод секретов в папки vars/...
@@ -137,5 +137,5 @@ ansible-vault encrypt_string --vault-id test@prompt 'admin' --name 'login'
 8. 
 Запустить плейбуки:
 
-Либо make create_prod/create_test 
-Либо ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_install.yml ansible-playbook --vault-id test@prompt -i inventory/testing.yml nginx_install.yml 
+Либо make create_prod/create_test \
+Либо ansible-playbook --vault-id prod@prompt -i inventory/production.yml nginx_install.yml; ansible-playbook --vault-id test@prompt -i inventory/testing.yml nginx_install.yml 
