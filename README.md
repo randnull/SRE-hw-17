@@ -1,6 +1,6 @@
 # Видео-демо
 ```
-Google-диск: https://drive.google.com/file/d/1PYOG8xsIVtGqEOF63aC0G0yoh9yX0qUp/view?usp=sharing
+Google-диск (качество лучше): https://drive.google.com/file/d/1PYOG8xsIVtGqEOF63aC0G0yoh9yX0qUp/view?usp=sharing
 Yandex-диск: https://disk.yandex.ru/d/JTRlp_rzJ1PkZw
 ```
 # Подготовка
