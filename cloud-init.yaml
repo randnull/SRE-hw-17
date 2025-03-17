@@ -3,4 +3,4 @@ users:
   - name: vmuser
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCcmVwLoflSlSpK6XuZ7PlysGjKmuLLTC5WZSGtCDpCRgNawbmRqJYq485eM6dA7UZ3tOmWZFUPBF4l9q5/6jbI9f6dGgJ8JcMcm5fBuC5bSDWBLh1bsCDBdFbf91mhAWC5ihmjfdE34HSdItBoNInWVKcrh7ucw0FwZEo+EPDPy+xCZezUtslECiwQ/v5t24ZCvXPxyYwekoWeWU4yLYHlLkRkCtuiQ/tg9vlzEhiRs3QoJSrKI2uJRKpze2ZZNVSdT5XSBsaQmfn29xOycrCdYgkhXIDzF4TNYTLMTktUbHngLz4n3zguUeuSHWKakOm+JTJHUYMp5pYg/JH2hYbFKPJaG/g+RoS++JuqNClHywlYYwnJQZmlAdIfzxzKTPAeOuIpquVlFFppQObLo07AcnIh14dEHrcjJEy08mea7tUY0V5N7Jl1TMcn/8QjXzTL3pax8Fpp2I1KhX8ut/u1WIA5qqAzIGlIC5YKw5U7DFnXep4IiNLmThcPhTiN+2exIXpXkhfztwhGKW7tqWD2a4lLz7kp53YngJe1/eEeOFdkJv2BeqyoRCYPmb1xOjDG6dh+T3f7grREVo1hobL3Xaw4FBaZfZPkmqF1p1c55wisWk+hYGk8WGnmFIYQ/YtEyBWDIzRgtzMA5fuvaRfC79OUiteNaWVWsdOUx0p2Gw== kirillgorunov@MacBook-Pro-Kirill.local
+    - ssh-rsa AAAAB3Nz... (тут публичный ключ)
